@@ -1,0 +1,2 @@
+aalt-log FATAL $@
+return 1

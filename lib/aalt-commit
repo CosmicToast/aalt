@@ -1,0 +1,7 @@
+# iterates over resname, commiting the results to the filesystem
+
+for k v in ${(kv)resname}; do
+  [[ -a $aalt_prefix/$k/$v ]] || continue
+  ln -sf $aalt_prefix/$k/$v $aalt_dest/$k || \
+    aalt-log ERROR could not commit $aalt_prefix/$k/$v to $aalt_dest/$k - skipping
+done

@@ -1,0 +1,20 @@
+#!/bin/zsh
+
+# define variables
+# changing these allows you to use aalt as a unified alternatives system
+# for example, one aalt_dest pointing to /usr/bin and one to /usr/lib
+aalt_dest=/usr/bin
+aalt_prefix=/usr/share/aalt
+
+# option a: use the .zwc file - this makes things simpler
+fpath+=( /usr/share/aalt.zwc )
+autoload -w /usr/share/aalt.zwc
+
+# option b: use a standard directory
+# this lets your users edit the scripts at will, but is slower and more error-prone
+fpath+=( /usr/share/aalt )
+for f in /usr/share/aalt/*~*.conf(.N)
+  autoload ${f:t}
+
+# then exec into main
+aalt-main $@

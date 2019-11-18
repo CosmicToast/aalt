@@ -1,0 +1,8 @@
+# registers pathname as group for progname
+# args:
+#   1: prog
+#   2: group
+#   3: path
+
+mkdir -p $aalt_prefix/$1
+ln -s $3 $aalt_prefix/$1/$2 || aalt-die could not write to $aalt_prefix/$1/$2

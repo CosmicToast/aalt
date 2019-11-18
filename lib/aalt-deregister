@@ -1,0 +1,12 @@
+# deregisters group from progname
+# args:
+#   1: groupname (required)
+#   2: progname (optional)
+
+(( $# )) || return 1
+
+if (( $# = 2 )); then
+  rm -f $aalt_prefix/$2/$1
+else
+  rm -f $aalt_prefix/*/$1
+fi

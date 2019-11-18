@@ -1,0 +1,36 @@
+# manipulates global state (resname/resval) based on inputs
+# args:
+#   1: progname
+#   2: groupname
+#   3: priority (numeric, non-numeric = 0)
+# see the aalt-main for the meaning of aalt_prefix
+
+# sanity
+[[ $# -eq 3 ]] || aalt-die incorrect argument count in $0: found $@ || return 1
+[[ -d $aalt_prefix ]] || aalt-die $aalt_prefix is not a directory || return 2
+
+# handle wildcard
+if [[ $1 = '*' ]]; then
+  for d in $aalt_prefix/*(-FN); do
+    $0 $d $2 $3
+  done
+  return 0
+fi
+
+# there's nothing to do if progname doesn't exist, or if groupname isn't an alt for it
+[[ -d $aalt_prefix/$1 ]] || return 0
+[[ -h $aalt_prefix/$1/$2 ]] || return 0
+
+# define in case they're not defined yet
+# resname: the name of the currently selected group
+#   key: progname
+#   val: groupname
+# resval: the value of the currently selected group
+#   key: progname
+#   val: priority of groupname
+typeset -A resname resval
+
+if (( $3 > $resval[$1] )); then
+  resname[$1]=$2
+  resval[$1]=$3
+fi

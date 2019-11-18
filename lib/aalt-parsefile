@@ -1,0 +1,8 @@
+# parses a file
+# args: 1: the filename to parse
+
+[[ -r $1 ]] || aalt-die cannot open $1 for reading || return 1
+while read prog group priority
+do
+  aalt-handleline $prog $group $priority
+done < $file

@@ -1,0 +1,71 @@
+# aalt: Abyss ALTernatives
+# args:
+#   actions (capitals):
+#     -C: commit
+#     -D: deregister
+#     -P: list|print
+#     -R: register
+#   data (lower case):
+#     -f: filepath
+#     -g: groupname
+#     -p: progname
+
+# examples:
+#   register an entry: aalt -R -p progname -g groupname -f filepath
+#   deregister an entry:
+#     a) aalt -D -p progname -g groupname # deregister specific combo
+#     b) aalt -D -g groupname # deregister any groupname anywhere
+#   read configuration files and commit them to disk: aalt -C
+#   read configuration files and list what would be committed: aalt -P
+
+: ${aalt_dest:=/usr/bin}
+: ${aalt_prefix:=/usr/share/aalt}
+
+local action=0
+local commitflag=0
+local deregflag=0
+local printflag=0
+local regflag=0
+
+local filepath=
+local groupname=
+local progname=
+
+local name=
+while getopts CDPRf:g:p: name
+do
+  case $name in
+    C) (( action++ )); commitflag=1;;
+    D) (( action++ )); deregflag=1;;
+    P) (( action++ )); printflag=1;;
+    R) (( action++ )); regflag=1;;
+    f) filepath=$OPTARG;;
+    g) groupname=$OPTARG;;
+    p) progname=$OPTARG;;
+  esac
+done
+
+(( action == 1 )) || aalt-die must perform exactly one action || return 1
+
+# register / deregister don't require configuration parsing
+if (( deregflag )); then
+  [[ -n $groupname ]] || aalt-die cannot deregister an entry without a group name || return 1
+  [[ -n $progname ]] && aalt-deregister $groupname $progname || aalt-deregister $groupname
+fi
+
+if (( regflag )); then
+  [[ -n $filepath ]] || aalt-die cannot register an entry without an entry path || return 1
+  [[ -n $groupname ]] || aalt-die cannot register an entry without a group name || return 1
+  [[ -n $progname ]] || aalt-die cannot register an entry without a program name || return 1
+  aalt-register $progname $groupname $filepath
+fi
+
+# read configuration files
+for f in $aalt_prefix/*.conf(.N)
+do
+  [[ -r $f ]] && aalt-parsefile $f
+done
+[[ -r /etc/aalt.conf ]] && aalt-parsefile /etc/aalt.conf # force last
+
+(( commitflag )) && aalt-commit
+(( printflag )) && aalt-print
