@@ -19,7 +19,7 @@ fi
 
 # there's nothing to do if progname doesn't exist, or if groupname isn't an alt for it
 [[ -d $aalt_prefix/$1 ]] || return 0
-[[ -h $aalt_prefix/$1/$2 ]] || return 0
+[[ -e $aalt_prefix/$1/$2 ]] || return 0
 
 # define in case they're not defined yet
 # resname: the name of the currently selected group
