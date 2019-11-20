@@ -5,4 +5,4 @@
 
 local loglevel=$1
 shift
-printf '[%s] %s' $loglevel "$@"
+printf '[%s] %s\n' $loglevel "$@"
