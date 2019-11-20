@@ -3,5 +3,5 @@
 for k v in ${(kv)resname}; do
   aalt-log INFO $k '->' $v
   [[ -e $aalt_prefix/$k/$v ]] && continue
-  aalt-log WARNING however, $aalt_prefix/$k/$v doesn't exist, so it would be skipped
+  aalt-log WARNING however, $aalt_prefix/$k/$v doesn\'t exist, so it would be skipped
 done
