@@ -5,4 +5,4 @@ test_suite("kyua")
 required_programs="/usr/bin/zsh"
 
 atf_test_program{name="aalt-log"}
--- atf_test_program{name="aalt-die"}
+atf_test_program{name="aalt-die"}
