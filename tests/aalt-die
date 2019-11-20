@@ -4,7 +4,8 @@ atf_test_case multi_word
 multi_word_body() {
 	atf_check \
 		-s 'exit:1' \
-		-o 'inline:[FATAL] multi word message\n' \
+		-o 'empty' \
+		-e 'inline:[FATAL] multi word message\n' \
 		/usr/bin/zsh -c 'autoload '$(atf_get_srcdir)'/../lib/*(.N); fpath+=( '$(atf_get_srcdir)'/../lib ); aalt-die multi word message'
 }
 
