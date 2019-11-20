@@ -9,6 +9,16 @@ multi_word_body() {
 		/usr/bin/zsh -c 'autoload '$(atf_get_srcdir)'/../lib/*(.N); fpath+=( '$(atf_get_srcdir)'/../lib ); aalt-die multi word message'
 }
 
+atf_test_case no_args
+no_args_body() {
+	atf_check \
+		-s 'exit:1' \
+		-o 'empty' \
+		-e 'inline:[FATAL] \n' \
+		/usr/bin/zsh -c 'autoload '$(atf_get_srcdir)'/../lib/*(.N); fpath+=( '$(atf_get_srcdir)'/../lib ); aalt-die'
+}
+
 atf_init_test_cases() {
 	atf_add_test_case multi_word
+	atf_add_test_case no_args
 }
