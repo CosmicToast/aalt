@@ -18,8 +18,17 @@
 #   read configuration files and commit them to disk: aalt -C
 #   read configuration files and list what would be committed: aalt -P
 
+# where to put symlinks
 : ${aalt_dest:=/usr/bin}
+# where to look for .conf files and progname dirs
 : ${aalt_prefix:=/usr/share/aalt}
+# resname: the name of the currently selected group
+#   key: progname
+#   val: groupname
+# resval: the value of the currently selected group
+#   key: progname
+#   val: priority of groupname
+typeset -A resname resval
 
 local action=0
 local commitflag=0

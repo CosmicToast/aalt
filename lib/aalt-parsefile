@@ -5,4 +5,4 @@
 while read prog group priority
 do
   aalt-handleline $prog $group $priority
-done < $file
+done < $1
