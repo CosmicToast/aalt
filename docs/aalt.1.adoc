@@ -1,0 +1,54 @@
+= aalt(1)
+Chloe Kudryavtsev <toast@toast.cafe>
+v0.1.0
+:doctype: manpage
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+aalt - Abyss ALTernatives system
+
+== Synopsis
+*aalt* -C +
+*aalt* -D -g _groupname_ [-p _progname_] +
+*aalt* -P +
+*aalt* -R -f _targetpath_ -g _groupname_ -p _progname_
+
+== Description
+*aalt* handles any single alternatives destination (one at a time).
+It has the following modes of operation:
+
+=== Commit (*-C*)
+*aalt* will read its configuration files and commit the changes to disk.
+
+=== Deregister (*-D*)
+*aalt* will remove the registration of a particular _groupname_ from a particular _progname_.
+If no _progname_ is specified, it will iterate over all available _prognames_ and _deregister_ the _groupname_ from all of them.
+
+=== Print (*-C*)
+*aalt* will read its configuration files and print a listing of the compiled configuration.
+
+=== Register (*-R*)
+*aalt* will register _targetpath_ as an alternative for _progname_ named _groupname_.
+
+== Options
+_groupname_::
+The name of the "group". These point to the target file.
+They can be found inside of *aalt_prefix*/_progname_/.
+
+_progname_::
+The name of the "program" that is being managed.
+These do not have to be a program, but it is named so for historical reasons (originally, *aalt* was going to only manage `/usr/bin`).
+These are directories under *aalt_prefix*/ as well as the names of the symlinks that will be placed inside of *aalt_dest*.
+
+_targetpath_::
+The name of the file (when registering) that the _groupname_ should point to.
+
+== Configuration Format
+*aalt* configuration files, located in *aalt_prefix*/\*.conf and `/etc/aalt.conf` follow the following per-line format: `progname groupname priority`.
+_progname_ may be `*`, in which case it will apply to all applicable _prognames_.
+Lower _priority_ takes precedence.
+System maintainers should use values between 100 and 199, while users should use values between 1 and 99.
+
+== Environment
+*aalt_dest*:: determines where *aalt* will place resulting symbolic links.
+*aalt_prefix*:: determines where *aalt* will look for _prognames_ and default configuration files.
