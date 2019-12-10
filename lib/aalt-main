@@ -36,18 +36,20 @@ local deregflag=0
 local printflag=0
 local regflag=0
 
+local configfile=
 local filepath=
 local groupname=
 local progname=
 
 local name=
-while getopts CDPRf:g:p: name
+while getopts CDPRc:f:g:p: name
 do
   case $name in
     C) (( action++ )); commitflag=1;;
     D) (( action++ )); deregflag=1;;
     P) (( action++ )); printflag=1;;
     R) (( action++ )); regflag=1;;
+    c) configfile=$OPTARG;;
     f) filepath=$OPTARG;;
     g) groupname=$OPTARG;;
     p) progname=$OPTARG;;
@@ -70,11 +72,15 @@ if (( regflag )); then
 fi
 
 # read configuration files
-for f in $aalt_prefix/*.conf(.N)
-do
-  [[ -r $f ]] && aalt-parsefile $f
-done
-[[ -r /etc/aalt.conf ]] && aalt-parsefile /etc/aalt.conf # force last
+if [[ -n $configfile ]]; then
+  [[ -r $configfile ]] && aalt-parsefile $configfile
+else
+  for f in $aalt_prefix/*.conf(.N)
+  do
+    [[ -r $f ]] && aalt-parsefile $f
+  done
+  [[ -r /etc/aalt.conf ]] && aalt-parsefile /etc/aalt.conf # force last
+fi
 
 (( commitflag )) && aalt-commit
 (( printflag )) && aalt-print

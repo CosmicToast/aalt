@@ -8,6 +8,7 @@ v0.1.0
 aalt - Abyss ALTernatives system
 
 == Synopsis
+*aalt* [-c _configfile_] ... +
 *aalt* -C +
 *aalt* -D -g _groupname_ [-p _progname_] +
 *aalt* -P +
@@ -31,6 +32,9 @@ If no _progname_ is specified, it will iterate over all available _prognames_ an
 *aalt* will register _targetpath_ as an alternative for _progname_ named _groupname_.
 
 == Options
+_configfile_::
+Instead of parsing default configuration locations, only parse the selected file.
+
 _groupname_::
 The name of the "group". These point to the target file.
 They can be found inside of *aalt_prefix*/_progname_/.
