@@ -21,7 +21,7 @@
 # where to put symlinks
 : ${aalt_dest:=/usr/bin}
 # where to look for .conf files and progname dirs
-: ${aalt_prefix:=/usr/share/aalt}
+: ${aalt_prefix:=/var/lib/aalt}
 # resname: the name of the currently selected group
 #   key: progname
 #   val: groupname
