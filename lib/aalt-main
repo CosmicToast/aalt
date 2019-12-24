@@ -84,3 +84,5 @@ fi
 
 (( commitflag )) && aalt-commit
 (( printflag )) && aalt-print
+
+return 0
