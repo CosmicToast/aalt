@@ -5,7 +5,7 @@
 
 (( $# )) || return 1
 
-if (( $# = 2 )); then
+if (( $# == 2 )); then
   rm -f $aalt_prefix/$2/$1
 else
   rm -f $aalt_prefix/*/$1
