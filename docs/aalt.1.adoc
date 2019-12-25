@@ -48,7 +48,7 @@ _targetpath_::
 The name of the file (when registering) that the _groupname_ should point to.
 
 == Configuration Format
-*aalt* configuration files, located in *aalt_prefix*/\*.conf and `/etc/aalt.conf` follow the following per-line format: `progname groupname priority`.
+*aalt* configuration files, located in *aalt_prefix*/\*.conf, `/etc/aalt.d/*.conf` and `/etc/aalt.conf` follow the following per-line format: `progname groupname priority`.
 _progname_ may be `*`, in which case it will apply to all applicable _prognames_.
 Lower _priority_ takes precedence.
 System maintainers should use values between 100 and 199, while users should use values between 1 and 99.
