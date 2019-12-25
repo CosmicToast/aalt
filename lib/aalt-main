@@ -59,6 +59,13 @@ else
   do
     [[ -r $f ]] && aalt-parsefile $f
   done
+  if [[ -d /etc/aalt.d ]]
+  then
+    for f in /etc/aalt.d/*.conf(.N)
+    do
+      [[ -r $f ]] && aalt-parsefile $f
+    done
+  fi
   [[ -r /etc/aalt.conf ]] && aalt-parsefile /etc/aalt.conf # force last
 fi
 
